@@ -1,0 +1,4 @@
+1. node.js is a event driven
+2. non-blocking I/O model, can take several requests at one time and return the ones that have been completed
+3. lightweight and efficient as requests are not queued
+4. good for data-intensive real-time application(eg: Chat App)
