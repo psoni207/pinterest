@@ -4,7 +4,7 @@ const morgan = require('morgan');
 const mongoose = require('mongoose');
 const ejs = require('ejs');
 const engine = require('ejs-mate');
-const fileUpload = require('express-fileUpload');
+const fileUpload = require('express-fileupload');
 
 
 var app = express();
