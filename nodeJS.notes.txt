@@ -2,3 +2,39 @@
 2. non-blocking I/O model, can take several requests at one time and return the ones that have been completed
 3. lightweight and efficient as requests are not queued
 4. good for data-intensive real-time application(eg: Chat App)
+5. node is build o google v8 engine
+6. it is a runtime environment
+7. great for prototyping and agile development
+8. do not use for CPU - intensive apps
+
+console.log(); //global object
+//global
+setTimeout(); // to delay
+clearTimeout();
+
+setInterval(); // repeatedly delay
+clearInterval();
+
+//instead of window as this in browser
+//global.console.log();
+// in node every file is a module
+
+NPM
+//npm is a command line tool
+//npm i(install) -g(globally) npm@5.5.1
+//before adding node packages to your app
+//create a file package.json (meta-data about the app)
+//npm init
+//npm init --yes(flag)
+//npmjs.com
+//npm i underscore --save(flag: to save to the list dependencies)
+// --save(): no need to use in latest version
+
+REQUIRE
+//require()
+//core module
+//File or Folder
+//exists in node_modules
+
+RESTORE dependencies
+// npm install or i
