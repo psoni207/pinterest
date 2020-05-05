@@ -7,6 +7,10 @@
 7. great for prototyping and agile development
 8. do not use for CPU - intensive apps
 
+//window --> global
+//document --> process
+
+
 console.log(); //global object
 //global
 setTimeout(); // to delay
@@ -38,3 +42,59 @@ REQUIRE
 
 RESTORE dependencies
 // npm install or i
+
+Semantic Versioning
+//"^4.13.6" // 4.x
+//Major.Minor.Patch
+//Patch - Bug Fixes 4.13.7
+//Minor - Adding new features without breaking the existing apis
+//Minor - 4.14.0
+//Major - 5.0.0
+//Caret sign tells to use any minor or patch as long as major is same
+
+//Tilde
+//"~1.8.3" // 1.8.x
+npm list
+//to see the dependencies
+//npm list --depth=0
+//to see dependencies of your app
+
+npm view mongoose
+//package.json of mongoose library
+npm view mongoose dependencies
+//only dependencies property
+
+install specific Version
+//npm install mongoose@2.4.2
+
+outdated package version
+//npm outdated
+
+npm update
+//only updates minor and patch releases
+
+npm-check-updates
+//npm install -g npm-check-updates
+//npm-check updates
+//old version -> new version
+//npm-check updates(or ncu) -u
+//npm install
+
+
+npm jshint
+//npm i -g jshint --save-dev
+//only for testing
+
+to uninstall
+//npm un mongoose
+
+//npm is not specific to an app
+//npm is a global package
+//ng angular cli
+//npm i -g npm
+
+npm -g outdated
+//npm un -g
+
+//npm version minor
+//npm publish

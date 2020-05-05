@@ -1,0 +1,141 @@
+middleware
+1. json() parses the req body into a json object and passes control to route handler route()
+2. route() terminates the req -res cycle by returning a response to the client
+
+app.use(function(req,res,next){
+  console.log("logging...);
+  next();//next miidleware func
+})
+
+
+logger.js
+function log (req,res,next){
+  console.log("logging...);
+  next();//next miidleware func
+}
+
+module.exports = log;
+
+//in index.js
+const logger = require('./logger');
+
+app.use(logger);
+
+
+Middleware functiion
+app.use(express.urlencoded({extended:true})); //key=value&key=value and populates req.body like a json object
+app.use(express.static('public'));
+// static contents are served from root of the website
+
+
+morgan
+const morgan = require('morgan');
+app.use(morgan('tiny'));
+//it is a logger
+
+//Env Variable
+process.env.NODE_ENV
+app.get('env')
+
+if(app.get('env') === 'development'){
+app.use(morgan('tiny'));
+}
+
+export NODE_ENV=production
+
+//npm config
+npm i config
+create folder config
+//inside create a file default.json
+//create development.json
+//create production.json
+
+
+in index.js
+// const config = require('config')
+
+//configuration
+{
+  "name": "My express app-development"
+  "mail":{
+    "host":"dev-mail-server"
+  }
+}
+
+export NODE_ENV=development
+console.log('mail-server: ' + config.get('mail.host'));
+
+export NODE_ENV=production
+console.log('mail-server: ' + config.get('mail.host'));
+
+//store your secrets in enviroment varialbe
+export app_password = 1234
+
+//create a custom-environment-varialbes.json
+{
+  "mail":{
+    "password":"app_password"
+  }
+}
+console.log('mail-server: ' + config.get('mail.password'));
+
+debug package
+//npm i debug
+
+const startupDebugger = require('debug')('app:startup')
+const dbDebugger = require('debug')('app:db')
+
+
+export DEBUG=app:startup,app:db
+export DEBUG=app:*
+
+deBugger('connected to db...');
+
+
+template engines:
+Pug
+Mustache
+EJS
+
+npm i pug
+
+//set view engine
+app.set('view engine','pug');
+app.set('views','./views');
+
+create views folder
+create index.pug
+/*
+html
+  html
+    title = title
+  body
+    h1 = message
+
+app.get('./', (req,res) => {
+  res.render('index',{title: "My Express App", message: "hello"});
+})
+
+structure your application
+
+create folder routes
+create courses.js
+const express = require('express')
+const router = express.Router();
+
+router.get.. so on
+
+module.exports = router
+
+in index.js
+const courses = require('./routes/courses');
+app.use('/api/courses',courses);
+
+//also the path would be just root in courses.js
+
+
+create middleware
+inside create logger.js
+
+in index.js
+  const logger = require('./middleware/logger');

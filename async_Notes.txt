@@ -1,0 +1,170 @@
+Asynchronous - non blocking
+
+console.log('Before');
+
+
+//async and non-blocking function
+//scheduled a task to perform in future
+setTimeout( () => {
+  console.log('Reading a user from a database...')
+}, 2000)
+
+console.log('After');
+
+
+//async doesn't mean Concurrent or Multi-Threaded
+
+three ways to deal with async code
+//Callbacks
+//Promises
+//Async/await
+
+
+console.log('Before');
+
+getUser(1,(user) => {
+  console.log('user',user);
+
+  getRepositories(user.gitUser, (repos) =>{
+    console.log('Reops',repos);
+
+      getCommits(repo,(commits) => {
+          //CALLBACK HELL PROBLEM
+      });
+  });
+});
+
+console.log(user);
+
+console.log('After');
+//callback
+function getUser(id, callback) {
+  setTimeout( () => {
+    console.log('Reading a user from a database...')
+    callback({id: id, gitUser: "mosh"});
+    }, 2000)
+}
+
+function getRepositories(username,callback){
+  setTimeout( () => {
+    console.log("Calling GitHub API...")
+    callback(['repo1','repo2','repo3']);
+  }, 2000);
+}
+
+//CALLBACK HELL PROBLEM
+name anonymous function with named function
+console.log('Before');
+
+getUser(1,getRepositories);
+
+console.log(user);
+
+
+function getRepositories(user){
+  getRepositories(user.gitUser,getCommits);
+}
+
+function getCommits(repos){
+    getCommits(repo,displayCommits);
+}
+
+function displayCommits(commits){
+  console.log(commits);
+}
+
+
+
+//Better way to deal with async
+//PROMISE
+//Holds the eventual result of an Asynchronous operation
+//Initially in Pending state
+//Fulfilled
+//Something wrong - Rejected state
+
+
+const p = new Promise( (resolve,result) => {
+  //some async work
+  setTimeout( () => {
+    //result
+    //resolve('return result'); //pending => resolved,Fulfilled
+    //reject(new Error('message..'));
+  },2000);
+
+});
+
+
+//Consume this Promise
+//two methods, one catch() to catch any errors, and then() to get the result
+p.then(result => {
+  console.log('Reuslt',result);
+}).catch( err => console.log('Error',err.message));
+
+
+//Callback to Promise
+
+
+getUser(1)
+  .then(user => {
+    console.log(user);
+  })
+
+getUser(1)
+  .then(user => getRepositories(user.gitUser))
+  .then(repos => getCommits(repos[0]))
+  .then(commits => {
+    console.log('Commits',commits);
+  }).catch(err => console.log('Error',err.message));
+
+
+function getUser(id) {
+  return new Promise((resolve,reject) => {
+    //some async work
+    setTimeout( () => {
+      console.log('Reading a user from a database...')
+      resolve({id: id, gitUser: "mosh"});
+      }, 2000);
+
+  });
+}
+
+
+function getRepositories(username){
+  return new Promise((resolve,reject) => {
+    setTimeout( () => {
+        console.log("Calling GitHub API...")
+        resolve(['repo1','repo2','repo3']);
+      }, 2000);
+  });
+}
+
+
+
+function getCommits(repo){
+  return new Promise((resolve,reject) => {
+     setTimeout( () => {
+     console.log("Calling GitHub API...")
+      resolve(['commit']);
+     }, 2000);
+  });
+}
+
+
+//Await-based approach
+//Async and Await
+//write async codes like sync codes
+
+
+//async and await is build on top of PROMISE
+async function displayCommits(){
+  try{
+    const user = await getUser(1);
+    const repos = await getRepositories(user.gitUser);
+    const commits = await getCommits(repos[0]);
+    console.log(commits);
+  }catch(err){
+    console.log('After');
+  }
+
+}
+displayCommits();

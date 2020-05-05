@@ -1,0 +1,163 @@
+const app = express();
+
+app.use(express.json());
+
+REST
+//Create, Read, Update, Delete CRUD Operations
+HTTP methods
+//Get, Post, Put, delete
+//for get, GET req
+//for update, PUT req
+// for delete, DELETE req
+// create request, POST req
+
+Express
+//path, callBackFunction
+app.get('/', (req,res) => {
+  res.send('hello world');
+});
+
+
+
+app.get('/api/courses',(req,res) => {
+  res.send([1,2,3]);
+})
+
+const port = process.env.PORT || 3000
+
+app.listen(port, () => {
+  console.log(`listening on port ${port}...);
+})
+
+
+/api/courses/1
+app.get('/api/courses/:id',(req,res) => {
+  res.send(req.params);
+})
+
+/api/posts/year/month
+app.get('/api/courses/:year/:month',(req,res) => {
+  res.send(req.params);
+})
+
+api/posts/year/month?sortBy=name
+app.get('/api/courses/:year/:month',(req,res) => {
+  res.send(req.query);
+})
+
+
+courses = [
+  {id: 1, name = 'course1'},
+  {id: 2, name = 'course2'},
+  {id: 3, name = 'course3'}
+];
+
+//GET
+app.get('/api/courses/:id',(req,res) => {
+  let course = courses.find(c => c.id === parseInt(req.params.id));
+
+  if(!course){
+    //404 object not found
+    res.status(404).send('The course with given ID was not found');
+  }
+
+  res.send(course);
+})
+
+//POST
+app.post('/api/courses',(req,res) => {
+  //validation
+
+  const schema = {
+  name: Joi.string().min(3).required()
+  };
+
+  const result = Joi.validate(req.body, schema);
+
+  if(result.error){
+    //400 bad request
+    res.status(400).send(result.error.details[0].message);
+    return ;
+  }
+
+  /*
+  if(!req.body.name){
+    //400 bad request
+    res.status(400).send('Name is required');
+  }
+*/
+
+  const course = {
+    id: courses.lenght + 1,
+    name: req.body.name
+  };
+
+  courses.push(course);
+
+  res.send(course);
+});
+
+
+Joi package
+//npm install joi
+
+//Joi is class
+const Joi = reqiure('joi');
+
+
+PUT//
+app.put('api/courses/:id', (req,res) => {
+  //Look up the course
+  //If not existing, return 404
+  const course = courses.find(c => c.id === parseInt(req.params.id));
+
+  if(!course){
+    //404 object not found
+    return res.status(404).send('The course with given ID was not found');
+  }
+
+  //validate
+  //If invalid, return 400 -  Bad request
+
+  const result = validateCourse(req.body);
+
+  const {error} = validateCourse(req.body); //result.error
+
+  if(error){
+    //400 bad request
+    return res.status(400).send(error.details[0].message);
+  }
+
+
+
+
+  //update course
+  course.name = req.body.name;
+  res.send(course);
+  //return the updated course
+})
+
+
+function validateCourse(course){
+const schema = {
+name: Joi.string().min(3).required()
+};
+
+return Joi.validate(course, schema);
+}
+
+DELETE
+app.delete('api/courses/:id',(req,res) => {
+  //Look up the course
+  //If not existing, return 404
+  const course = courses.find(c => c.id === parseInt(req.params.id));
+
+  if(!course){
+    //404 object not found
+    res.status(404).send('The course with given ID was not found');
+  }
+
+  const index = courses.indexOf(course);
+  courses.splice(index,1);
+
+})

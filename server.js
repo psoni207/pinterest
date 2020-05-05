@@ -8,6 +8,11 @@ const fileUpload = require('express-fileupload');
 
 
 var app = express();
+/*app.get()
+app.post()
+app.put()
+app.delete()
+*/
 
 mongoose.connect('mongodb+srv://psoni1186:psony1186@cluster0-wnlds.mongodb.net/test',function(err){
   if(err){
@@ -26,6 +31,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
+
 app.use(morgan('dev'));
 
 
